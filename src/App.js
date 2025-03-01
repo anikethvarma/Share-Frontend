@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import PersonalDetails from "./components/PersonalDetails";
+import Cookies from "js-cookie";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
+import "./App.css";
+
+const flag = Cookies.get("jwtToken") === undefined ? false : true;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={(flag)?<Home/> : <Navigate to="login"/>} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/personal-details" element={<PersonalDetails/>} />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
+};
 export default App;
